@@ -32,6 +32,9 @@ export class DynatraceClient {
     }
 
     public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}, headers?: {[key: string]: string}): Promise<AxiosResponse<ResponseType>> {
+        console.log('method:',method);
+        console.log('path:',path);
+        console.log('body:',body);
         return await axios.request<ResponseType>({
             url: `${this.baseUrl}${path}`,
             params: params,
