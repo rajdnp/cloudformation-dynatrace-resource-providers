@@ -111,9 +111,12 @@ class Resource extends AbstractDynatraceResource<ResourceModel, AxiosResponse<Sy
     }
 
     async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<AxiosResponse<SyntheticMonitorPayload>> {
-        return await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
+        const response = await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
             'get',
             `/api/v1/synthetic/monitors/${model.entityId}`);
+        //console.log(`GET Response: ${JSON.stringify(response,null,4)}`);
+        console.log('Get Response:',response.data);
+        return response;
     }
 
     async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
@@ -124,23 +127,29 @@ class Resource extends AbstractDynatraceResource<ResourceModel, AxiosResponse<Sy
     }
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<AxiosResponse<SyntheticMonitorPayload>> {
-        return await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
+        const response =  await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
             'post',
             '/api/v1/synthetic/monitors',
             {},
             Transformer.for(model.toJSON())
                 .transformKeys(CaseTransformer.PASCAL_TO_CAMEL)
                 .transform());
+        //console.log(`Create Response: ${JSON.stringify(response,null,4)}`);
+        console.log('Create Response:',response.data);
+        return response;
     }
 
     async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<AxiosResponse<SyntheticMonitorPayload>> {
-        return await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
+        const response =  await new DynatraceClient(typeConfiguration?.dynatraceAccess.endpoint, typeConfiguration?.dynatraceAccess.token, this.userAgent).doRequest<SyntheticMonitorPayload>(
             'put',
             `/api/v1/synthetic/monitors/${model.entityId}`,
             {},
             Transformer.for(model.toJSON())
                 .transformKeys(CaseTransformer.PASCAL_TO_CAMEL)
                 .transform());
+        //console.log(`Update Response: ${JSON.stringify(response,null,4)}`);
+        console.log('Update Response:',response.data);
+        return response;
     }
 
     async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
